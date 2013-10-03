@@ -1,0 +1,26 @@
+<% unless @friendlists.blank? %>
+  <% @friendlists.each do |friendlist|%>
+      <table width="100%" border="1">
+        <tr>
+        <td><%= friendlist.friend.first_name %></td>
+        <td><%= friendlist.friend.last_name %></td>
+        <td><%= friendlist.friend.email %></td>
+        <td><div id ="div1">
+           <%= link_to "#{friendlist.friend_staus}", "#", "data-user-id" => friendlist.friend_id, :class => "accept" %>
+        </div></td>
+      </tr>
+    </table>
+  <% end %>
+<% end %>
+<script>
+$(document).ready(function(){
+  $(".accept").click(function(){ 
+        var friend_id = $(this).data("user-id"); 
+            $.get('/users/replyrequest?friend_id='+friend_id, function(data,status){
+              alert("Data: " + data + "\nStatus: " + status);
+           }); 
+  });
+});
+</script>
+ 
+

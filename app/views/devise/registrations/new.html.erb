@@ -1,8 +1,8 @@
 <h2>Sign up</h2>
+<div style="background-color: #B2DAE8; width:25%; ">
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+<%= nested_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
-  
   <div><%= f.label :first_name %><br />
   <%= f.text_field :first_name %></div>
   
@@ -48,7 +48,15 @@
   <div><%= f.label :religion %><br />
   <%= f.text_field :religion %></div>
   
+  <div>
+  <% resource.pictures.build %>
+  <%= f.fields_for :pictures do |pic| %>
+    <%= pic.file_field :image %>
+  <% end %>
+  </div>
+  
   <div><%= f.submit "Sign up" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>

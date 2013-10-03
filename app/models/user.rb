@@ -1,11 +1,22 @@
 class User < ActiveRecord::Base
-  has_and_belongs_to_many :friends
+  has_many :friendlists, :dependent => :destroy
+  has_many :friends, :through => :friendlists, :conditions => "status = 'accepted'"
+  has_many :pictures, :as => :imageable
+  has_many :myfriend, :through => :friends, :source => "Friend"
+  has_many :posts, :as => :imageable 
+  
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :date_of_birth, :contact, :hobby, :home_town, :state, :country, :relationship_status, :interest_in, :language, :religion, :gender
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :date_of_birth, 
+    :contact, :hobby, :home_town, :state, :country, :relationship_status, :interest_in, :language, :religion, :gender,
+    :pictures_attributes, :posts_attributes
+
+  accepts_nested_attributes_for :pictures, :allow_destroy => true
+  
   # attr_accessible :title, :body
 end

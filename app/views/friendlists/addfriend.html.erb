@@ -1,0 +1,11 @@
+<h1>Friend</h1>
+Name:<%= current_user.first_name %>&nbsp;
+Email:<%= current_user.email %>
+<%= form_for(@friendlists) do |f| %>
+  <input type="hidden" value=@user.id>
+  <%= f.submit "invite"%>
+<% end %>
+  
+
+ 
+ 

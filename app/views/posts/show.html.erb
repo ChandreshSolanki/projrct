@@ -1,0 +1,9 @@
+
+
+<h1>User Post</h1>
+<%= form_for :post, :url => {:action => :userpost} do |f| %>
+
+  <%= f.text_area :status, :cols => 50, :rows => 5%>
+  <%= f.submit "Post" %></br>
+  <span class="label label-info">Like</span>
+<% end %>

@@ -1,0 +1,9 @@
+
+<%= form_for(@user, :url => sendrequest_user_path) do |f| %>
+  <input type="hidden" name="user_id "value=@user.id>
+  <%= f.submit "invite"%>
+<% end %>
+  
+
+ 
+ 
