@@ -1,0 +1,6 @@
+
+<div style="width:250px; height:250px;">
+  <% @pictures.each do |pic| %>
+    <%= image_tag(pic.image_url) if pic.image.present?%>
+  <% end %>
+</div>

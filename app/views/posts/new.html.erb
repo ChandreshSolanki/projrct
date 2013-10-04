@@ -1,12 +1,15 @@
 <h1>User Post</h1>
-<%= nested_form_for :post, :url => {:action => :userpost} do |f| %>
+<%= nested_form_for(@post) do |f| %>
   <%= f.text_area :status, :cols => 50, :rows => 5%>
   <div>
   <%= f.fields_for :pictures do |pic| %>
-  <%= f.hidden_field (:user_id, :value => @current_user.id) %>
     <%= pic.file_field :image %>
+    <%= pic.hidden_field :user_id, :value => current_user.id %>
   <% end %>
   </div>
   <%= f.submit "Post" %></br>
   <span class="label label-info">Like</span>
 <% end %>
+
+
+

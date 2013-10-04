@@ -1,14 +1,24 @@
 class PostsController < ApplicationController
 
-  def userpost
-    @post =Post.new(params[:post])
-    if @post.save
-      redirect_to welcome_users_path
-    end
+  def new
+    @post=Post.new
+    @post.pictures.build
+    @pictures =current_user.posts.last.pictures 
   end
   
-  def show
-     @post =Post.new
+  def index
+    @post=Post.new
+    @pictures =current_user.posts.last.pictures
   end
-   
+  
+  def create
+    @post = current_user.posts.new(params[:post])
+    if @post.save
+      @pictures =@post.pictures 
+      render "/posts/index"
+    else
+      render :text => "error"
+    end
+  end
+
 end

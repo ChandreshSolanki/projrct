@@ -50,8 +50,11 @@
           <div class="container-fluid nav-collapse">
             <ul class="nav">
               <li><%= link_to "Home", "/path1"  %></li>
-              <li><%= link_to "Post", "/posts/userpost"  %></li>
-              <li><%= link_to "Sigin", "/users/sign_in"  %></li>
+              <% if current_user.present?%>
+              <li><%= link_to "Signout", "/users/sign_out", method: 'DELETE' %></li>
+              <%else%>
+              <li><%= link_to "Signin", "/users/sign_in"  %></li>
+              <%end%>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -63,10 +66,12 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">yuyf786f</li>
-              <li><%= link_to "Home", "/path1"  %></li>
-              <li><%= link_to "About", "/path2"  %></li>
-              <li><%= link_to "Sigin", "/users/sign_in"  %></li>
+              <li class="nav-header">Toc.com</li>
+              <% if current_user.present?%>
+              <li><%= link_to "EditProfile", "/users/edit"  %></li>
+              <li><%= link_to "Post", "/posts/new"  %></li>
+              <li><%= link_to "Notification", "/users/getrequest"  %></li>
+              <%end%>
             </ul>
           </div><!--/.well -->
         </div><!--/span-->

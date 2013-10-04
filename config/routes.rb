@@ -54,7 +54,7 @@ App3::Application.routes.draw do
   
   resources :posts do
     collection do
-      post:userpost
+      
     end
   end
   
