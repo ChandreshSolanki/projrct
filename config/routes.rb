@@ -50,11 +50,18 @@ App3::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
+
   resources :friendlists
   
   resources :posts do
     collection do
-      
+      post:add_comment
+      post:add_likepost
+      post:add_likecomment
+    end
+    resources :comments do
+      collection do
+      end
     end
   end
   

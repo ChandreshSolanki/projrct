@@ -1,4 +1,6 @@
-<h1>User Post</h1>
+<div class="page-header">
+  <h2>Post <small>Create</small></h2>
+</div>
 <%= nested_form_for(@post) do |f| %>
   <%= f.text_area :status, :cols => 50, :rows => 5%>
   <div>
@@ -8,8 +10,6 @@
   <% end %>
   </div>
   <%= f.submit "Post" %></br>
-  <span class="label label-info">Like</span>
 <% end %>
-
 
 

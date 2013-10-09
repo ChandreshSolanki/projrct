@@ -1,16 +1,23 @@
 <% unless @friendlists.blank? %>
-  <% @friendlists.each do |friendlist|%>
-      <table width="100%" border="1">
-        <tr>
+  <table width="100%" border="1" class="table table-striped">
+    <tr>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Email</th>
+      <th>FriendRequest</th>
+    </tr>
+    <% @friendlists.each do |friendlist|%>
+      <tr>
         <td><%= friendlist.friend.first_name %></td>
         <td><%= friendlist.friend.last_name %></td>
         <td><%= friendlist.friend.email %></td>
         <td><div id ="div1">
-           <%= link_to "#{friendlist.friend_staus}", "#", "data-user-id" => friendlist.friend_id, :class => "accept" %>
+           <%= link_to "#{friendlist.friend_staus}", "#", "data-user-id" => friendlist.friend_id, :class => "accept" %>&nbsp;&nbsp;
+           <%= link_to "reject" %> 
         </div></td>
       </tr>
-    </table>
-  <% end %>
+    <% end %>
+  </table>
 <% end %>
 <script>
 $(document).ready(function(){
@@ -18,9 +25,10 @@ $(document).ready(function(){
         var friend_id = $(this).data("user-id"); 
             $.get('/users/replyrequest?friend_id='+friend_id, function(data,status){
               alert("Data: " + data + "\nStatus: " + status);
-           }); 
-  });
+           });
+        });
 });
 </script>
  
+
 

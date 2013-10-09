@@ -1,30 +1,32 @@
-
 <div style="width:50px; height:50px;">
   <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
 </div>
 
-<div style="background-color: #B2DAE8">
-  <h3>Find Friend</h3>
   <%= form_tag(welcome_users_path, method: 'GET') do %>
+  <div class="navbar navbar-fluid-top">
+    <div class="span11  well well-small"><h5>Find-Friend</h5>
       <%= text_field_tag :first_name %>
-  <%= submit_tag "Search" %>
+      <%= submit_tag "Search" %>
   <% end %>
-</div>
- 
+    </div>
+  </div></br></br></br></br></br></br>
+
 <% unless @users.blank? %>
-  <% @users.each do |user|%>
-    <table width="100%" border="1">
+ <table width="100%" border="1" class= "table table-striped">
     <tr>
       <th>FirstName</th>
       <th>LastName</th>
       <th>Email</th>
       <th>FriendRequest</th>
-    </tr>
+  </tr>
+  <% @users.each do |user|%>
+  <div class="panel panel-default">
+   <div class="panel-heading">Friend-List</div>
     <tr>
       <td><%= user.first_name %></td>
       <td><%= user.last_name %></td>
       <td><%= user.email %></td>
-      <td><button>invite</button></td>
+      <td><button class="btn btn-default" >invite</button></td>
       <script>
       $(document).ready(function(){
         $("button").click(function(){ 
@@ -35,8 +37,8 @@
        });
     </script>
    </tr>
+    <% end %>
   </table>
- <% end %>
 <% end %>
 
 

@@ -1,6 +1,84 @@
-
-<div style="width:250px; height:250px;">
-  <% @pictures.each do |pic| %>
-    <%= image_tag(pic.image_url) if pic.image.present?%>
-  <% end %>
+<div class="page-header">
+  <h2>Post  <small>User</small></h2>
 </div>
+<%= render :partial=> 'posts/index' %>
+<br>
+<% @posts.each do |p|%>
+<br>
+<div class="span9  well well-large">
+  <div class="panel panel-danger">
+  <div class="horizontalRule">
+    </div>
+    <%= p.status %><br>
+    <% p.pictures.each do |pic| %>
+      <%= image_tag(pic.image_url) if pic.image.present?%></br><br><br>
+    <br>
+    <% end %>
+    <div class="pull-right">
+        <input type="button" value="like" id="<%= p.id%>" class="like_post" >
+        <div id="counter">1</div>
+    </div>
+    <div class="horizontalRule">
+    </div>
+    <% p.comments.each do |c| %>
+      <div class="span11  well well-small">
+        <%= c.content %><br>
+      </div>
+      <div class="pull-left">
+        <input type="button" value="like" id="<%= c.id%>" class="like_comment" >
+      </div>
+    <% end %>
+    <div id="myspan_<%= p.id%>">
+    </div>
+    <div class="span11  well well-small">
+      <input type="text" id="box_<%= p.id%>" class="textbox" >
+      <input type="button" value="comment" id="<%= p.id%>" class="comment" >
+    </div>
+  </div>
+</div>
+<% end %>
+
+<script type="text/javascript" >
+   $('.comment').click(function(form){
+     var id = (this.id);
+     var text_val= $('#box_'+id).val();
+     $.ajax({
+       type: 'POST',
+       url: '/posts/add_comment',
+       data: {text: text_val, p_id: id}
+     }).done(function(ret){
+       $('#box_'+id).val("");
+       $('#myspan_'+id).append(ret);
+     });
+   });
+   
+   var count = 0;
+   $('.like_post').click(function(form){
+     var id = (this.id);
+     count++;
+     $("#counter").html("My like is: "+count);
+     $.ajax({
+       type: 'POST',
+       url: '/posts/add_likepost',
+       data: {p_id: id}
+     }).done(function(ret){
+     $(this).css('display','none');
+     $('#myspan1_'+id).append(ret);
+  });
+ });
+
+   $('.like_comment').click(function(form){
+     var id = (this.id);
+     count++;
+     $("#counter").html("My like is: "+count);
+     $.ajax({
+       type: 'POST',
+       url: '/posts/add_likecomment',
+       data: {p_id: id}
+     }).done(function(ret){
+     $(this).css('display','none');
+     $('#myspan1_'+id).append(ret);
+  });
+ });
+
+</script>

@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130925103935) do
+ActiveRecord::Schema.define(:version => 20131009084354) do
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "post_id"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "friendlists", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "friend_id"
+    t.string   "friend_staus"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "friends", :force => true do |t|
     t.integer  "user_id"
@@ -19,6 +35,39 @@ ActiveRecord::Schema.define(:version => 20130925103935) do
     t.boolean  "friend_status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "photos", :force => true do |t|
+    t.string   "imagable_type"
+    t.integer  "imagable_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "pictures", :force => true do |t|
+    t.string   "image"
+    t.string   "imageable_type"
+    t.integer  "imageable_id"
+    t.integer  "user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "posts", :force => true do |t|
+    t.integer  "user_id"
+    t.text     "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "ratingable_type"
+    t.integer  "ratingable_id"
+    t.boolean  "like"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "users", :force => true do |t|

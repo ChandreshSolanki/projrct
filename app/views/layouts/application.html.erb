@@ -48,14 +48,16 @@
           </a>
           <a class="brand" href="#">toc.com</a>
           <div class="container-fluid nav-collapse">
+            <div class="pull-right">
             <ul class="nav">
-              <li><%= link_to "Home", "/path1"  %></li>
               <% if current_user.present?%>
               <li><%= link_to "Signout", "/users/sign_out", method: 'DELETE' %></li>
               <%else%>
+              <li><%= link_to "Home", "/"  %></li>
               <li><%= link_to "Signin", "/users/sign_in"  %></li>
               <%end%>
             </ul>
+            </div>
           </div><!--/.nav-collapse -->
         </div>
       </div>
@@ -69,8 +71,9 @@
               <li class="nav-header">Toc.com</li>
               <% if current_user.present?%>
               <li><%= link_to "EditProfile", "/users/edit"  %></li>
-              <li><%= link_to "Post", "/posts/new"  %></li>
+              <li><%= link_to "Find-Friend", "/users/welcome"  %></li>
               <li><%= link_to "Notification", "/users/getrequest"  %></li>
+              <li><%= link_to "View-Post", "/posts"  %></li>
               <%end%>
             </ul>
           </div><!--/.well -->

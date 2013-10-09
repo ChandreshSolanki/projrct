@@ -26,14 +26,7 @@ class UsersController < ApplicationController
   end
   
   def getrequest
-    @friendlists = Friendlist.where(:friend_id => current_user.id )
-    if @friendlists.present?
-    end
-   
-   #@friendlists=Friendlist.new(:user_id => current_user.id, :friend_id => params[:id], :friend_staus =>"accepted")
-    # if @friendlist.save
-     #  flash[:notice] = 'Friend sucessfully accepted!'
-    # end
+    @friendlists = Friendlist.where(:user_id => current_user.id )
   end
   
   def replyrequest
@@ -44,6 +37,13 @@ class UsersController < ApplicationController
       render :text => "done"
     else
       render :text => "error"
+    end
+  end
+  
+  def destroy
+    @friendlist = Friendlist.where(:friend_id => params[:friend_id])
+    if @friendlist.present?
+       @friendlist.destroy
     end
   end
   
