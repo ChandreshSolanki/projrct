@@ -51,6 +51,10 @@
             <div class="pull-right">
             <ul class="nav">
               <% if current_user.present?%>
+              <li><div style="width:50px; height:50px;">
+                    <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
+                 </div>
+              </li>
               <li><%= link_to "Signout", "/users/sign_out", method: 'DELETE' %></li>
               <%else%>
               <li><%= link_to "Home", "/"  %></li>
@@ -68,8 +72,12 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header">Toc.com</li>
+              <li class="nav-header"><%= current_user.first_name %></li>
               <% if current_user.present?%>
+              <li><div style="width:50px; height:50px;">
+                    <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
+                 </div>
+              </li>
               <li><%= link_to "EditProfile", "/users/edit"  %></li>
               <li><%= link_to "Find-Friend", "/users/welcome"  %></li>
               <li><%= link_to "Notification", "/users/getrequest"  %></li>
@@ -84,9 +92,7 @@
         </div>
       </div><!--/row-->
 
-      <footer>
-        <p>&copy; www.toc.com</p>
-      </footer>
+     
 
     </div> <!-- /container -->
 

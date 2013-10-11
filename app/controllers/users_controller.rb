@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
   
   def welcome
-    @users = User.where(:first_name => params[:first_name]) 
+    @users = User.where(:first_name => params[:first_name])
     if @users.present?
       flash[:notice] = "find match"
     else
@@ -18,10 +18,10 @@ class UsersController < ApplicationController
     end
   end
   
-  
   def sendrequest
-    @friendlists=Friendlist.new(:user_id => current_user.id, :friend_id => params[:id], :friend_staus =>"invited")
+    @friendlists=Friendlist.new(:user_id => params[:id], :friend_id => current_user.id, :friend_staus =>"invited")
     if @friendlists.save
+      redirect_to welcome_users_path
     end
   end
   
@@ -34,17 +34,24 @@ class UsersController < ApplicationController
     @friendlist = Friendlist.where(:friend_id => params[:friend_id]).first
     if @friendlist.present?
       @friendlist.update_column(:friend_staus, "accepted")
+      Friendlist.create!(:user_id => @friendlist.friend_id, :friend_id => @friendlist.user_id, :friend_staus => "accepted")
       render :text => "done"
     else
       render :text => "error"
     end
   end
   
-  def destroy
-    @friendlist = Friendlist.where(:friend_id => params[:friend_id])
+  def deleterequest
+    @friendlist = Friendlist.where(:friend_id => params[:id], :user_id => current_user.id).first
     if @friendlist.present?
-       @friendlist.destroy
+       @friendlist.update_column(:friend_staus, "rejected")
+       redirect_to welcome_users_path
     end
+  end
+  
+  def destroy
+    @friendlist = Friendlist.find_by_user_id_and_friend_id(params[:id], current_user.id).destroy
+    redirect_to _path
   end
   
   def uploadimage
@@ -53,3 +60,4 @@ class UsersController < ApplicationController
   end
   
 end
+

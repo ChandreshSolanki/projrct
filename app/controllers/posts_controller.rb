@@ -7,9 +7,11 @@ class PostsController < ApplicationController
   end
   
   def index
-     @post = Post.new
-     @post.pictures.build
-     @posts = current_user.posts
+    @post = Post.new
+    @post.pictures.build
+    friend_ids = current_user.friends.pluck(:id)
+    friend_ids << current_user.id
+    @posts = Post.where("user_id IN (?)", friend_ids)
   end
   
   def create
@@ -21,10 +23,9 @@ class PostsController < ApplicationController
 
   def add_comment
     @post=Post.find(params[:p_id])
-    @comment = @post.comments.new
-    @comment = Comment.new(:post_id=>params[:p_id], :user_id=>current_user.id, :content=>params[:text])
+    @comment = @post.comments.new(:user_id=>current_user.id, :content=>params[:text])
     if(@comment.save)
-      render :partial => 'comment'
+      render text: "done"
     end
   end
   

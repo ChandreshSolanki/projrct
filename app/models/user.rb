@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :friendlists, :dependent => :destroy
-  has_many :friends, :through => :friendlists, :conditions => "status = 'accepted'"
+  has_many :friends, :through => :friendlists, :conditions => "friend_staus = 'accepted'"
   has_many :pictures, :as => :imageable
   has_many :myfriend, :through => :friends, :source => "Friend"
   has_many :posts

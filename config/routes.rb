@@ -73,13 +73,15 @@ App3::Application.routes.draw do
       get:addfriend
       get:getrequest
       get:replyrequest
-      get:uploadimage
+      get:deleterequest
+      get:sendrequest
     end
     
     member do
       get:sendrequest
       get:getrequest
       get:replyrequest
+      get:deleterequest
       get:uploadimage
     end
   end

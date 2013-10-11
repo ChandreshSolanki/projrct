@@ -1,33 +1,101 @@
-<% unless @friendlists.blank? %>
+  <div class="page-header">
+     <h3>Friend  <small>Invited</small></h3>
+  </div>
   <table width="100%" border="1" class="table table-striped">
     <tr>
       <th>FirstName</th>
       <th>LastName</th>
       <th>Email</th>
+      <th>FriendStatus</th>
       <th>FriendRequest</th>
     </tr>
-    <% @friendlists.each do |friendlist|%>
+    <% @friendlists.invited.each do |friendlist|%>
       <tr>
         <td><%= friendlist.friend.first_name %></td>
         <td><%= friendlist.friend.last_name %></td>
         <td><%= friendlist.friend.email %></td>
-        <td><div id ="div1">
-           <%= link_to "#{friendlist.friend_staus}", "#", "data-user-id" => friendlist.friend_id, :class => "accept" %>&nbsp;&nbsp;
-           <%= link_to "reject" %> 
+        <td><%= friendlist.friend_staus %></td>
+        <td><div id ="reply">
+           <%= link_to "Accept", "#", "data-user-id" => friendlist.friend_id, :class => "accept" %>&nbsp;&nbsp;
+           <%= link_to "Reject", "#", "data-user-id" => friendlist.friend_id, :class => "reject" %> 
         </div></td>
       </tr>
-    <% end %>
+    <%end%>
   </table>
-<% end %>
+  
+      <div class="page-header">
+        <h3>Friend  <small>Rejected</small></h3>
+      </div>
+        <table width="100%" border="1" class="table table-striped">
+        <tr>
+          <th>FirstName</th>
+          <th>LastName</th>
+          <th>Email</th>
+          <th>FriendStatus</th>
+          <th>Action</th>
+       </tr>
+        <% @friendlists.rejected.each do |friendlist|%>
+       <tr>
+          <td><%= friendlist.friend.first_name %></td>
+          <td><%= friendlist.friend.last_name %></td>
+          <td><%= friendlist.friend.email %></td>
+          <td><%= friendlist.friend_staus %></td>
+          <td><%= link_to "Accept", "#", "data-user-id" => friendlist.friend_id, :class => "accept" %>
+      </tr>
+      <%end%>
+     </table>
+     
+     
+     
+  <div class="page-header">
+     <h3>Friend  <small>Accepted</small></h3>
+  </div>
+  
+  <table width="100%" border="1" class="table table-striped">
+    <tr>
+      <th>FirstName</th>
+      <th>LastName</th>
+      <th>Email</th>
+      <th>FriendStatus</th>
+      <th>Action</th>
+    </tr>
+     <% @friendlists.accepted.each do |friendlist|%>
+    <tr>
+        <td><%= friendlist.friend.first_name %></td>
+        <td><%= friendlist.friend.last_name %></td>
+        <td><%= friendlist.friend.email %></td>
+        <td><%= friendlist.friend_staus %></td>
+        <td><%= link_to "Unfriend", "#", "data-user-id" => friendlist.friend_id, :class => "reject" %>
+      </tr>
+      <%end%>
+  </table>
+
 <script>
 $(document).ready(function(){
   $(".accept").click(function(){ 
         var friend_id = $(this).data("user-id"); 
             $.get('/users/replyrequest?friend_id='+friend_id, function(data,status){
-              alert("Data: " + data + "\nStatus: " + status);
+               if(status=="success"){
+         $("#reply").html("Accepted")
+        }
+       
            });
         });
 });
+
+$('.reject').click(function(form){
+     var friend_id = $(this).data("user-id")
+     $.ajax({
+       type: 'GET',
+       url: '/users/deleterequest',
+       data: { id: friend_id}
+     }).done(function(data,status){
+       if(status=="success"){
+        $("#reply").html("Rejected")
+       }
+       
+     });
+   });
 </script>
  
 

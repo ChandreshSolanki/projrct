@@ -1,8 +1,4 @@
-<div style="width:50px; height:50px;">
-  <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
-</div>
-
-  <%= form_tag(welcome_users_path, method: 'GET') do %>
+<%= form_tag(welcome_users_path, method: 'GET') do %>
   <div class="navbar navbar-fluid-top">
     <div class="span11  well well-small"><h5>Find-Friend</h5>
       <%= text_field_tag :first_name %>
@@ -10,36 +6,53 @@
   <% end %>
     </div>
   </div></br></br></br></br></br></br>
+  
+<% @users.each do |user|%>
+  <% if !(user.id==current_user.id ) %>
+    <table width="100%" border="1" class= "table table-striped">
+      <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>FriendRequest</th>
+      </tr>
+   
+    <% #status= current_user.friendlists.where(:friend_id => user.id).first.friend_staus %>
+      <div class="panel panel-default">
+        <div class="panel-heading"></div>
+          <tr>
+            <td><%= user.first_name %></td>
+            <td><%= user.last_name %></td>
+            <td><%= user.email %></td>
+            <td>
+              <div id ="inivitation">
+                <%if current_user.friendlists.blank? %> 
+                  <%= link_to "invit","#","data-user-id" => user.id, :class => "invite"%>        
+                <%else%>                       
+                  <%= user.friendlists.first.friend_staus %>
+                <%end%> 
+              </div>
+            </td>
 
-<% unless @users.blank? %>
- <table width="100%" border="1" class= "table table-striped">
-    <tr>
-      <th>FirstName</th>
-      <th>LastName</th>
-      <th>Email</th>
-      <th>FriendRequest</th>
-  </tr>
-  <% @users.each do |user|%>
-  <div class="panel panel-default">
-   <div class="panel-heading">Friend-List</div>
-    <tr>
-      <td><%= user.first_name %></td>
-      <td><%= user.last_name %></td>
-      <td><%= user.email %></td>
-      <td><button class="btn btn-default" >invite</button></td>
-      <script>
-      $(document).ready(function(){
-        $("button").click(function(){ 
-          $.get('<%= sendrequest_user_path(user) %> ', function(data,status){
-            alert("Data: " + data + "\nStatus: " + status);
-           });
-         });
-       });
-    </script>
-   </tr>
-    <% end %>
-  </table>
+          </tr>
+    </table>
+    <%end%>
 <% end %>
 
+<script>
+  $('.invite').click(function(form){
+     var friend_id = $(this).data("user-id")
+     $.ajax({
+       type: 'GET',
+       url: '/users/sendrequest',
+       data: { id: friend_id}
+     }).done(function(data,status){
+       if(status=="success"){
+        $("#inivitation").html("alreadyinvited");
+       }
+     });
+   });
+</script>
 
+            
 
