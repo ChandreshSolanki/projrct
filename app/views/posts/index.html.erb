@@ -5,24 +5,35 @@
 <br>
 
 <% @posts.each do |p|%>
-<br>
-<div class="span9  well well-large">
-  <div class="panel panel-danger">
-    <div class="horizontalRule">
-    </div>
+  <div class="span9  well well-large">
+    <div class="panel panel-danger">
+      <div class="horizontalRule">
+      </div>
+      <div class="span11  well well-small">
+      <div class="pull-right">
+      <div style="width:40px; height:40px;">
+                    <%= image_tag(p.user.pictures.last.image_url) %>
+                    <span class="label label-info"><%= p.user.first_name %></span>
+                 </div>
+        </div>
+      </div><br><br><br><br>
       <%= p.status %><br>
         <% p.pictures.each do |pic| %>
           <%= image_tag(pic.image_url) if pic.image.present?%></br><br><br><br>
         <% end %>
         <div class="pull-right">
           <input type="button" value="like" id="<%= p.id%>" class="like_post" >
-        <div id="counter">1</div>
+          <div id="counter">1</div>
         </div>
           <% p.comments.each do |c| %>
             <div class="span11  well well-small">
-              <%= c.content %><br>
+              <%= c.content %>
+                <div style="width:30px; height:30px;">
+                    <%= image_tag(c.user.pictures.last.image_url) %>
+                    <span class="label label-info"><%= c.user.first_name %></span>
+                </div>
             </div>
-            <div class="pull-left">
+            <div class="pull-right">
               <input type="button" value="like" id="<%= c.id%>" class="like_comment" >
             </div>
          <% end %>
@@ -35,6 +46,7 @@
     </div>
   </div>
 <% end %>
+
 
 
 <script type="text/javascript" >
@@ -73,9 +85,15 @@
        type: 'POST',
        url: '/posts/add_likecomment',
        data: {p_id: id}
-     }).done(function(ret){
-     $('#myspan1_'+id).append(ret);
+     }).done(function(data,status){
+     if(status=="success"){
+          var a = $("#"+id);
+          if (a.value=="dislike"){ a.val("like");}
+          else{ a.val("dislike");}
+       }
   });
  });
+ 
+ 
 
 </script>

@@ -49,11 +49,6 @@ class UsersController < ApplicationController
     end
   end
   
-  def destroy
-    @friendlist = Friendlist.find_by_user_id_and_friend_id(params[:id], current_user.id).destroy
-    redirect_to _path
-  end
-  
   def uploadimage
     @picture = Picture.new(params[:image])
     @picture.save

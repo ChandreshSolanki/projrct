@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :pictures, :as => :imageable
   has_many :myfriend, :through => :friends, :source => "Friend"
   has_many :posts
+  has_many :comments
+  has_many :ratings
   
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

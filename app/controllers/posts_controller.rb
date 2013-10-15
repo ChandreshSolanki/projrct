@@ -8,6 +8,7 @@ class PostsController < ApplicationController
   
   def index
     @post = Post.new
+    @user=User.all
     @post.pictures.build
     friend_ids = current_user.friends.pluck(:id)
     friend_ids << current_user.id
@@ -17,7 +18,7 @@ class PostsController < ApplicationController
   def create
    @post = current_user.posts.build(params[:post])
     if(@post.save)
-     redirect_to posts_path
+      redirect_to posts_path 
     end
   end
 
@@ -25,22 +26,31 @@ class PostsController < ApplicationController
     @post=Post.find(params[:p_id])
     @comment = @post.comments.new(:user_id=>current_user.id, :content=>params[:text])
     if(@comment.save)
-      render text: "done"
     end
   end
   
   def add_likepost
     @post=Post.find(params[:p_id])
-    if @post.ratings.create(:user_id=>current_user.id, :like=>true)
-      redirect_to posts_path 
-    end 
+    rating = @post.ratings.where(:user_id => current_user.id).first
+    if rating  
+      rating.update_column(:like, false)
+      render :text => "post unlike"
+    else  
+      @post.ratings.create(:user_id=>current_user.id, :like=>true)
+      render :text => "post liked"
+    end
   end
   
   def add_likecomment
     @comment=Comment.find(params[:p_id])
-    if @comment.ratings.create(:user_id=>current_user.id, :like=>true)
-      redirect_to posts_path 
-    end 
+    rating =@comment.ratings.where(:user_id => current_user.id).first
+    if rating  
+      rating.update_column(:like, false)
+      render :text => "comment unlike"
+    else  
+      @comment.ratings.create(:user_id=>current_user.id, :like=>true)
+      render :text => "comment liked"
+    end
   end
   
 end

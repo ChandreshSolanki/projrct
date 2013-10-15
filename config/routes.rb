@@ -59,6 +59,7 @@ App3::Application.routes.draw do
       post:add_likepost
       post:add_likecomment
     end
+   
     resources :comments do
       collection do
       end
