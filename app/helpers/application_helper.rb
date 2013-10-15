@@ -1,10 +1,10 @@
 module ApplicationHelper
-  def rating_like
-    @rating = Rating.where(:like => true).first
+ 
+  def comment_like(userid, id)
+    Rating.where(:user_id => userid, :ratingable_id => id, :like=>true )
   end
   
-  def rating_dislike
-    @rating = Rating.where(:like => false).first
+  def post_like(userid, id)
+    
   end
-
 end
