@@ -26,6 +26,7 @@ class PostsController < ApplicationController
     @post=Post.find(params[:p_id])
     @comment = @post.comments.new(:user_id=>current_user.id, :content=>params[:text])
     if(@comment.save)
+      render :text => "comment"
     end
   end
   

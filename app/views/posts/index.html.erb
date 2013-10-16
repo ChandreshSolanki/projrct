@@ -3,47 +3,55 @@
 </div>
 <%= render :partial=> 'posts/index' %>
 <br>
-
 <% @posts.each do |p|%>
   <div class="span9  well well-large">
     <div class="panel panel-danger">
       <div class="horizontalRule">
       </div>
       <div class="span11  well well-small">
-      <div class="pull-right">
-      <div style="width:40px; height:40px;">
-                    <%= image_tag(p.user.pictures.last.image_url) %>
-                    <span class="label label-info"><%= p.user.first_name %></span>
-                 </div>
-        </div>
+        <div class="pull-right">
+          <div style="width:40px; height:40px;">
+            <%= image_tag(p.user.pictures.last.image_url) %>
+            <span class="label label-info"><%= p.user.first_name %></span>
+          </div>
+         </div>
       </div><br><br><br><br>
       <%= p.status %><br>
         <% p.pictures.each do |pic| %>
-          <%= image_tag(pic.image_url) if pic.image.present?%></br><br><br><br>
+          <%= image_tag(pic.image_url) if pic.image.present?%></br><br>
         <% end %>
-        <%= post_like(p.user_id, p.id) %>
-        <div class="pull-right">
-          <input type="button" value="like" id="<%= p.id%>" class="like_post" >
-          <div id="counter">1</div>
-        </div>
+        <%= image_tag "like3.jpg" %>
+        <%= p.ratings.count :conditions => {:ratingable_id => p.id} %>
+        <%if commentpost_like(p.id) %>
+          <div class="pull-right">
+            <input type="button" value="dislike" id="<%= p.id%>" class="like_post" ></br><br>
+          </div>
+        <%else%>
+          <div class="pull-right">
+            <input type="button" value="like" id="<%= p.id%>" class="like_post" ></br><br>
+          </div>
+        <%end%>
           <% p.comments.each do |c| %>
             <div class="span11  well well-small">
               <%= c.content %>
-                <div style="width:30px; height:30px;">
+                <div style="width:30px; height:30px;" class="pull-right">
                     <%= image_tag(c.user.pictures.last.image_url) %>
                     <span class="label label-info"><%= c.user.first_name %></span>
                 </div>
             </div>
-            <%if  comment_like(c.user_id, c.id)  %>
-              <div class="pull-right">
-                <input type="button" value="like" id="<%= c.id%>" class="like_comment" >
-              </div>
-            <%else%>
+            <div class="pull-right">
+              <%= image_tag "like3.jpg" %>
+              <%= c.ratings.count :conditions => {:ratingable_id => c.id} %>
+            </div>
+            <%if  commentpost_like(c.id) %>
               <div class="pull-right">
                 <input type="button" value="dislike" id="<%= c.id%>" class="like_comment" >
               </div>
+            <%else%>
+              <div class="pull-right">
+                <input type="button" value="like" id="<%= c.id%>" class="like_comment" >
+              </div>
             <%end%>
-            
          <% end %>
          <div id="myspan_<%= p.id%>">
          </div>
@@ -54,8 +62,6 @@
     </div>
   </div>
 <% end %>
-
-
 
 <script type="text/javascript" >
 
@@ -71,34 +77,27 @@
      });
    });
    
-   var count = 0;
    $('.like_post').click(function(form){
      var id = (this.id);
-     count++;
-     $("#counter").html("My like is: "+count);
      $.ajax({
        type: 'POST',
        url: '/posts/add_likepost',
        data: {p_id: id}
-     }).done(function(ret){
-     $('#myspan1_'+id).append(ret);
+     }).done(function(data,status){
+     if(status=="success"){
+       }
   });
  });
 
    $('.like_comment').click(function(form){
      var id = (this.id);
-     count++;
-     $("#counter").html("My like is: "+count);
      $.ajax({
        type: 'POST',
        url: '/posts/add_likecomment',
        data: {p_id: id}
      }).done(function(data,status){
      if(status=="success"){
-          var a = $("#"+id);
-          if (a.value=="dislike"){ a.val("like");}
-          else{ a.val("dislike");}
-       }
+      }
   });
  });
  

@@ -1,10 +1,8 @@
 module ApplicationHelper
  
-  def comment_like(userid, id)
-    Rating.where(:user_id => userid, :ratingable_id => id, :like=>true )
+  def commentpost_like(id)
+  
+    Rating.where(:user_id => current_user.id, :ratingable_id => id).first 
   end
   
-  def post_like(userid, id)
-    
-  end
 end
