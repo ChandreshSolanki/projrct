@@ -20,8 +20,9 @@
         <% p.pictures.each do |pic| %>
           <%= image_tag(pic.image_url) if pic.image.present?%></br><br>
         <% end %>
+        <%= link_to "remove", p, :method => :delete %>
         <%= image_tag "like3.jpg" %>
-        <%= p.ratings.count :conditions => {:ratingable_id => p.id} %>
+        <%= p.ratings.count %>
         <%if commentpost_like(p.id) %>
           <div class="pull-right">
             <input type="button" value="dislike" id="<%= p.id%>" class="like_post" ></br><br>
@@ -41,9 +42,9 @@
             </div>
             <div class="pull-right">
               <%= image_tag "like3.jpg" %>
-              <%= c.ratings.count :conditions => {:ratingable_id => c.id} %>
+              <%= c.ratings.count %>
             </div>
-            <%if  commentpost_like(c.id) %>
+            <%if commentpost_like(c.id) %>
               <div class="pull-right">
                 <input type="button" value="dislike" id="<%= c.id%>" class="like_comment" >
               </div>
@@ -55,7 +56,7 @@
          <% end %>
          <div id="myspan_<%= p.id%>">
          </div>
-         <div class="span11  well well-small">
+         <div class="span11 well well-small">
            <input type="text" id="box_<%= p.id%>" class="textbox" >
            <input type="button" value="comment" id="<%= p.id%>" class="comment" >
          </div>

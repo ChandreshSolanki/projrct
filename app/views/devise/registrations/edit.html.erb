@@ -16,8 +16,45 @@
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <div><%= f.label :current_password %> <i></i><br />
   <%= f.password_field :current_password %></div>
+  
+  <div><%= f.label :date_of_birth %><br />
+  <%= f.text_field :date_of_birth %></div>
+  
+  <div><%= f.label :gender %><br />
+  <%= f.select :gender, options_for_select([["Male", "m"], ["Female", "f"]]) %>
+  
+  <div><%= f.label :contact %><br />
+  <%= f.text_field :contact %></div>
+  
+  <div><%= f.label :home_town %><br />
+  <%= f.text_field :home_town %></div>
+  
+  <div><%= f.label :state %><br />
+  <%= f.text_field :state %></div>
+  
+  <div><%= f.label :country %><br />
+  <%= f.text_field :country %></div>
+  
+  <div><%= f.label :relationship_status %><br />
+  <%= f.text_field :relationship_status %></div>
+
+  <div><%= f.label :interest_in %><br />
+  <%= f.text_field :interest_in %></div>
+  
+  <div><%= f.label :language %><br />
+  <%= f.text_field :language %></div>
+  
+  <div><%= f.label :religion %><br />
+  <%= f.text_field :religion %></div>
+  
+  <div>
+  <% resource.pictures.build %>
+  <%= f.fields_for :pictures do |pic| %>
+    <%= pic.file_field :image %>
+  <% end %>
+  </div>
 
   <div><%= f.submit "Update" %></div>
 <% end %>
