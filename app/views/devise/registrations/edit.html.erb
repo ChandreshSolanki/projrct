@@ -41,16 +41,15 @@
   <%= f.text_field :relationship_status %></div>
 
   <div><%= f.label :interest_in %><br />
-  <%= f.text_field :interest_in %></div>
+  <%= f.select :interest_in, options_for_select([["Male", "m"], ["Female", "f"]]) %>
   
   <div><%= f.label :language %><br />
-  <%= f.text_field :language %></div>
+  <%= f.select :language, options_for_select([["English", "e"], ["Hindi", "h"]]) %>
   
   <div><%= f.label :religion %><br />
   <%= f.text_field :religion %></div>
   
   <div>
-  <% resource.pictures.build %>
   <%= f.fields_for :pictures do |pic| %>
     <%= pic.file_field :image %>
   <% end %>

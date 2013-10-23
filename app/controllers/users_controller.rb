@@ -30,7 +30,6 @@ class UsersController < ApplicationController
   end
   
   def replyrequest
-    #@friendlist = Friendlist.find_by_id(params[:friend_id])
     @friendlist = Friendlist.where(:friend_id => params[:friend_id]).first
     if @friendlist.present?
       @friendlist.update_column(:friend_staus, "accepted")
