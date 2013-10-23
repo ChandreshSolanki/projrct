@@ -49,11 +49,12 @@
           <a class="brand" href="/">toc.com</a>
           <div class="container-fluid nav-collapse">
             <div class="pull-right">
-            <nav class="navbar navbar-inverse" role="navigation">
             <ul class="nav nav-tabs nav-justified">
               <% if current_user.present?%>
               <li><div style="width:50px; height:50px;">
-                    <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
+                   <a class="navbar-brand" href="/users/welcome">
+                      <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
+                    </a>
                  </div>
               </li>
               <li><%= link_to "Signout", "/users/sign_out", method: 'DELETE' %></li>
@@ -94,9 +95,6 @@
           <%= yield %>
         </div>
       </div><!--/row-->
-
-     
-
     </div> <!-- /container -->
 
   </body>

@@ -1,7 +1,6 @@
 App3::Application.routes.draw do
   devise_for :users
 
-  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -84,7 +83,6 @@ App3::Application.routes.draw do
       get:getrequest
       get:replyrequest
       get:deleterequest
-      get:uploadimage
     end
   end
     root :to => 'users#home'

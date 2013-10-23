@@ -1,11 +1,11 @@
 <%= form_tag(welcome_users_path, method: 'GET') do %>
   <div class="navbar navbar-fluid-top">
     <div class="span11  well well-small"><h5>Find-Friend</h5>
-      <%= text_field_tag :first_name %>
-      <%= submit_tag "Search" %>
-  <% end %>
+      <%= text_field_tag :first_name ,placeholder="Search" %>
+      <%= button_tag "Submit", :class => "btn btn-default" %>
     </div>
   </div></br></br></br></br></br></br>
+<% end %>
   
 <% @users.each do |user|%>
   <% if !(user.id==current_user.id ) %>
@@ -16,8 +16,6 @@
         <th>Email</th>
         <th>FriendRequest</th>
       </tr>
-   
-    <% #status= current_user.friendlists.where(:friend_id => user.id).first.friend_staus %>
       <div class="panel panel-default">
         <div class="panel-heading"></div>
           <tr>
@@ -28,7 +26,7 @@
               <div id ="inivitation">
                 <%if current_user.friendlists.blank? %> 
                   <%= link_to "invit","#","data-user-id" => user.id, :class => "invite"%>        
-                <%else%>                       
+                <%else%>
                   <%= user.friendlists.first.friend_staus %>
                 <%end%> 
               </div>

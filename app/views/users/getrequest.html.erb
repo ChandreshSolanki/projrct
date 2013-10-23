@@ -78,8 +78,7 @@ $(document).ready(function(){
             $.get('/users/replyrequest?friend_id='+friend_id, function(data,status){
                if(status=="success"){
          $("#reply").html("Accepted")
-        }
-       
+                }
            });
         });
 });
@@ -93,8 +92,7 @@ $('.reject').click(function(form){
      }).done(function(data,status){
        if(status=="success"){
         $("#reply").html("Rejected")
-       }
-       
+              }
      });
    });
 </script>

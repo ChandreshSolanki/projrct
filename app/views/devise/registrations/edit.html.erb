@@ -20,7 +20,7 @@
   <%= f.password_field :current_password %></div>
   
   <div><%= f.label :date_of_birth %><br />
-  <%= f.text_field :date_of_birth %></div>
+  <%= f.date_select :date_of_birth %></div>
   
   <div><%= f.label :gender %><br />
   <%= f.select :gender, options_for_select([["Male", "m"], ["Female", "f"]]) %>
@@ -38,7 +38,7 @@
   <%= f.text_field :country %></div>
   
   <div><%= f.label :relationship_status %><br />
-  <%= f.text_field :relationship_status %></div>
+  <%= f.select :relationship_status, options_for_select([["Single", "s"], ["Married", "m"]]) %>
 
   <div><%= f.label :interest_in %><br />
   <%= f.select :interest_in, options_for_select([["Male", "m"], ["Female", "f"]]) %>
