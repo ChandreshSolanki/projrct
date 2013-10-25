@@ -54,6 +54,15 @@ class PostsController < ApplicationController
     end
   end
   
+  def userinfo
+    @user = User.where(:id => current_user.id).first
+  end
+  
+  def friendinfo
+    @user = User.find(params[:id])
+    @friendlists = @user.friendlists.where(:friend_staus => "accepted")
+  end
+  
   def destroy
     @post=Post.find(params[:id])
     @post.destroy

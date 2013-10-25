@@ -58,6 +58,8 @@ App3::Application.routes.draw do
       post:add_comment
       post:add_likepost
       post:add_likecomment
+      get:userinfo
+      get:friendinfo
     end
    
     resources :comments do
