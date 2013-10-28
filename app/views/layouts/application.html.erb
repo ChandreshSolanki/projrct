@@ -52,7 +52,7 @@
             <ul class="nav nav-tabs nav-justified">
               <% if current_user.present?%>
               <li><div style="width:50px; height:50px;">
-                   <a class="navbar-brand" href="/posts/userinfo" >
+                    <a class="navbar-brand" href="/posts/userinfo" >
                       <%= image_tag(current_user.pictures.last.image_url) if current_user.pictures.present?%>
                     </a>
                  </div>
@@ -82,7 +82,6 @@
                     </a>
                  </div>
               </li>
-              <li><%= link_to "Edit-Profile", "/users/edit"  %></li>
               <li><%= link_to "User-Profile", "/posts/userinfo"  %></li>
               <li><%= link_to "Find-Friend", "/users/welcome"  %></li>
               <li><%= link_to "Notification", "/users/getrequest"  %></li>

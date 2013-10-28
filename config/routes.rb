@@ -71,13 +71,12 @@ App3::Application.routes.draw do
   resources :users do
     collection do
       get:welcome
-      post:friend
-      post:invite
-      get:addfriend
       get:getrequest
       get:replyrequest
       get:deleterequest
       get:sendrequest
+      get:edituser
+      put:updateuser
     end
     
     member do

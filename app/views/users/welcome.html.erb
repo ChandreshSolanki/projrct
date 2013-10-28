@@ -1,6 +1,10 @@
+<div class="page-header">
+  <h2>Find  <small>Friend</small></h2>
+</div>
+
 <%= form_tag(welcome_users_path, method: 'GET') do %>
   <div class="navbar navbar-fluid-top">
-    <div class="span11  well well-small"><h5>Find-Friend</h5>
+    <div class="span11  well well-small">
       <%= text_field_tag :first_name ,placeholder="Search" %>
       <%= button_tag "Submit", :class => "btn btn-default" %>
     </div>
@@ -8,7 +12,7 @@
 <% end %>
   
 <% @users.each do |user|%>
-  <% if !(user.id==current_user.id ) %>
+  <% if !(user.id==current_user.id ) && user.present? %>
     <table width="100%" border="1" class= "table table-striped">
       <tr>
         <th>FirstName</th>
